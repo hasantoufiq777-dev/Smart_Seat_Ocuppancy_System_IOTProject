@@ -8,10 +8,7 @@
 
 An end-to-end IoT and Computer Vision system for real-time study space management in libraries and smart campuses. The system integrates **Physical Chair Bounding Box Detection**, **Deep Learning Face Detection**, and **CNN Gender Classification** using a Raspberry Pi 5 with an Arducam IMX519 camera, combined with an ESP32 hardware sensor node (weight, human proximity, noise monitoring). Live data is synced via Firebase to a responsive, light-mode glassmorphism web dashboard with Bluetooth speaker audio warnings (`table.mp3`).
 
----
 
-## 📌 Repository Information
-* **GitHub Repository**: [Smart_Seat_Ocuppancy_System_IOTProject](https://github.com/hasantoufiq777-dev/Smart_Seat_Ocuppancy_System_IOTProject.git)
 
 ---
 
