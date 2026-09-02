@@ -1,4 +1,4 @@
-# 🎓 Smart Seat Occupancy System (SSOS) — Real-Time IoT & AI Dashboard
+# 🎓 Smart Seat Occupancy System (SSOS) — Real-Time IoT & Live Dashboard
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Hardware: ESP32](https://img.shields.io/badge/Hardware-ESP32-red.svg)](https://www.espressif.com/)
