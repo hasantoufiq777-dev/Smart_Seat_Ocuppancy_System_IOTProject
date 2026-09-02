@@ -1,0 +1,99 @@
+{
+  "_comment": "=== DEVELOPMENT RULES (Active) ===",
+  "_comment2": "WARNING: These rules allow unrestricted read/write access to the SmartStudySpace node.",
+  "_comment3": "Use these during development and testing ONLY. Switch to production rules before deploying publicly.",
+
+  "rules": {
+    "SmartStudySpace": {
+      ".read": true,
+      ".write": true
+    }
+  }
+}
+
+/*
+ * ============================================================
+ *  PRODUCTION RULES — Copy these into your Firebase Console
+ *  before deploying publicly.
+ * ============================================================
+ *
+ *  These rules allow:
+ *    - Anyone can READ all data (dashboard is public)
+ *    - Only AUTHENTICATED users can WRITE (ESP32 signs in)
+ *
+ *  How to apply:
+ *    1. Go to Firebase Console → Realtime Database → Rules
+ *    2. Replace the current rules with the JSON below
+ *    3. Click "Publish"
+ *
+ *  {
+ *    "rules": {
+ *      "SmartStudySpace": {
+ *        ".read": true,
+ *
+ *        "Seats": {
+ *          ".write": "auth != null",
+ *          "$seatId": {
+ *            ".validate": "newData.hasChildren(['status', 'fsrValue', 'humanDetected', 'lastUpdate'])",
+ *            "status": {
+ *              ".validate": "newData.isString() && (newData.val() === 'AVAILABLE' || newData.val() === 'OCCUPIED' || newData.val() === 'BAG_DETECTED')"
+ *            },
+ *            "fsrValue": {
+ *              ".validate": "newData.isNumber()"
+ *            },
+ *            "humanDetected": {
+ *              ".validate": "newData.isBoolean()"
+ *            },
+ *            "lastUpdate": {
+ *              ".validate": "newData.isString()"
+ *            }
+ *          }
+ *        },
+ *
+ *        "Summary": {
+ *          ".write": "auth != null",
+ *          ".validate": "newData.hasChildren(['availableSeats', 'occupiedSeats', 'bagDetectedSeats', 'totalSeats'])",
+ *          "availableSeats": {
+ *            ".validate": "newData.isNumber() && newData.val() >= 0"
+ *          },
+ *          "occupiedSeats": {
+ *            ".validate": "newData.isNumber() && newData.val() >= 0"
+ *          },
+ *          "bagDetectedSeats": {
+ *            ".validate": "newData.isNumber() && newData.val() >= 0"
+ *          },
+ *          "totalSeats": {
+ *            ".validate": "newData.isNumber() && newData.val() === 4"
+ *          }
+ *        },
+ *
+ *        "Sound": {
+ *          ".write": "auth != null",
+ *          ".validate": "newData.hasChildren(['level', 'status'])",
+ *          "level": {
+ *            ".validate": "newData.isNumber() && newData.val() >= 0"
+ *          },
+ *          "status": {
+ *            ".validate": "newData.isString() && (newData.val() === 'Noisy' || newData.val() === 'Quiet')"
+ *          }
+ *        }
+ *      }
+ *    }
+ *  }
+ *
+ * ============================================================
+ *  ADVANCED: Per-Seat Write Locking (optional)
+ * ============================================================
+ *  If you deploy multiple ESP32 devices (one per seat), you can
+ *  restrict each device to only write its own seat:
+ *
+ *  "Seats": {
+ *    "$seatId": {
+ *      ".write": "auth != null && auth.token.seatId === $seatId"
+ *    }
+ *  }
+ *
+ *  This requires setting custom claims on each ESP32's user
+ *  account via the Firebase Admin SDK.
+ * ============================================================
+ */

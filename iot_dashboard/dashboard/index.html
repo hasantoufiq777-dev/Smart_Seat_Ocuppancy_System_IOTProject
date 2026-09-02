@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Study Space — Real-Time Occupancy Monitor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- ══════════════════ Ambient Background Orbs ══════════════════ -->
+  <div class="ambient-bg">
+    <div class="orb orb--green"></div>
+    <div class="orb orb--red"></div>
+    <div class="orb orb--blue"></div>
+  </div>
+
+  <!-- ══════════════════ MONITOR HEADER ══════════════════ -->
+  <header class="monitor-header glass-panel">
+    <div class="monitor-header__left">
+      <div class="monitor-header__title">Live Summary</div>
+      <div class="monitor-header__time">
+        <span class="monitor-header__live-dot"></span>
+        <span id="headerClock">--:--:--</span>
+        <span class="monitor-header__date-sep">|</span>
+        <span id="headerDate"></span>
+      </div>
+    </div>
+    <div class="monitor-header__center">Study Space Occupancy Dashboard</div>
+    <div class="monitor-header__right">
+      <button id="adminToggleBtn" class="admin-toggle-btn">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+        <span>Admin</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- ══════════════════ MONITOR SECTION (Styled like user screenshot) ══════════════════ -->
+    <section class="monitor-section">
+      <!-- Summary Row -->
+      <div class="monitor-summary-row">
+        <div class="monitor-summary-box monitor-summary-box--total">
+          <span class="monitor-summary-box__label">Total Seats</span>
+          <span class="monitor-summary-box__value" id="monitorTotalSeats">4</span>
+        </div>
+        <div class="monitor-summary-box monitor-summary-box--occupied">
+          <span class="monitor-summary-box__label">Occupied</span>
+          <span class="monitor-summary-box__value" id="monitorOccupied">0</span>
+        </div>
+        <div class="monitor-summary-box monitor-summary-box--available">
+          <span class="monitor-summary-box__label">Available</span>
+          <span class="monitor-summary-box__value" id="monitorAvailable">4</span>
+        </div>
+      </div>
+
+      <div class="monitor-separator"></div>
+
+      <!-- Seats Grid -->
+      <div class="monitor-seats-grid">
+        <!-- Seat 1 -->
+        <div class="monitor-seat-card" id="monitor-seat-1" data-status="available">
+          <div class="monitor-seat-badge monitor-seat-badge--unknown" id="monitor-badge-1">UNKNOWN</div>
+          <div class="monitor-seat-circle" id="monitor-circle-1">
+            <!-- Icon injected dynamically -->
+            <svg class="monitor-icon monitor-icon--male" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm2 7H10c-.55 0-1 .45-1 1v6h2v6h2v-6h2v-6c0-.55-.45-1-1-1z"/>
+            </svg>
+          </div>
+          <div class="monitor-seat-name">Seat 1</div>
+          <div class="monitor-seat-status monitor-seat-status--available" id="monitor-status-1">Status - Available</div>
+        </div>
+
+        <!-- Seat 2 -->
+        <div class="monitor-seat-card" id="monitor-seat-2" data-status="available">
+          <div class="monitor-seat-badge monitor-seat-badge--unknown" id="monitor-badge-2">UNKNOWN</div>
+          <div class="monitor-seat-circle" id="monitor-circle-2">
+            <svg class="monitor-icon monitor-icon--female" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm2.4 7h-4.8c-.8 0-1.4.6-1.5 1.3l-1.1 6c-.1.6.4 1.2 1 1.2h1.7v4.5c0 .8.7 1.5 1.5 1.5s1.5-.7 1.5-1.5v-4.5h1.7c.6 0 1.1-.6 1-1.2l-1.1-6c-.1-.7-.7-1.3-1.4-1.3z"/>
+            </svg>
+          </div>
+          <div class="monitor-seat-name">Seat 2</div>
+          <div class="monitor-seat-status monitor-seat-status--available" id="monitor-status-2">Status - Available</div>
+        </div>
+
+        <!-- Seat 3 -->
+        <div class="monitor-seat-card" id="monitor-seat-3" data-status="available">
+          <div class="monitor-seat-badge monitor-seat-badge--unknown" id="monitor-badge-3">UNKNOWN</div>
+          <div class="monitor-seat-circle" id="monitor-circle-3">
+            <svg class="monitor-icon monitor-icon--male" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm2 7H10c-.55 0-1 .45-1 1v6h2v6h2v-6h2v-6c0-.55-.45-1-1-1z"/>
+            </svg>
+          </div>
+          <div class="monitor-seat-name">Seat 3</div>
+          <div class="monitor-seat-status monitor-seat-status--available" id="monitor-status-3">Status - Available</div>
+        </div>
+
+        <!-- Seat 4 -->
+        <div class="monitor-seat-card" id="monitor-seat-4" data-status="available">
+          <div class="monitor-seat-badge monitor-seat-badge--unknown" id="monitor-badge-4">UNKNOWN</div>
+          <div class="monitor-seat-circle" id="monitor-circle-4">
+            <svg class="monitor-icon monitor-icon--male" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm2 7H10c-.55 0-1 .45-1 1v6h2v6h2v-6h2v-6c0-.55-.45-1-1-1z"/>
+            </svg>
+          </div>
+          <div class="monitor-seat-name">Seat 4</div>
+          <div class="monitor-seat-status monitor-seat-status--available" id="monitor-status-4">Status - Available</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════ ADMIN COLLAPSIBLE PANEL ══════════════════ -->
+    <div id="adminPanel" class="admin-panel collapsed">
+
+      <!-- ══════════════════ DIAGNOSTIC SEAT CARDS ══════════════════ -->
+      <section class="section" id="seatsSection">
+        <h2 class="section__title">
+          <span class="section__icon">⚙️</span> Diagnostic Seat Overview
+        </h2>
+        <div class="seats-grid" id="seatsGrid">
+          <!-- Seat 1 -->
+          <article class="seat-card glass-panel" id="seat-1" data-status="unknown">
+            <div class="seat-card__header">
+              <div class="seat-card__id">
+                <div class="seat-card__icon-wrap">
+                  <svg class="seat-card__icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                    <path d="M4 18v3h3v-3h10v3h3v-3h1a1 1 0 001-1v-5a3 3 0 00-3-3h-1V5a2 2 0 00-2-2H8a2 2 0 00-2 2v4H5a3 3 0 00-3 3v5a1 1 0 001 1h1zM8 5h8v4H8V5z"/>
+                  </svg>
+                </div>
+                <span>Seat 1</span>
+              </div>
+              <span class="seat-card__badge" id="badge-1">Unknown</span>
+            </div>
+            <div class="seat-card__body">
+              <div class="seat-card__metric">
+                <span class="metric-label">FSR Sensor</span>
+                <span class="metric-value" id="fsr-1">—</span>
+              </div>
+              <div class="seat-card__metric">
+                <span class="metric-label">Human Detected</span>
+                <span class="metric-value" id="human-1">—</span>
+              </div>
+              <div class="seat-card__metric seat-card__metric--gender">
+                <span class="metric-label">Gender (AI)</span>
+                <span class="metric-value gender-value" id="gender-1">—</span>
+              </div>
+              <div class="seat-card__metric">
+                <span class="metric-label">Session Duration</span>
+                <span class="metric-value metric-value--accent" id="duration-1">—</span>
+              </div>
+            </div>
+            <div class="seat-card__footer">
+              <span class="seat-card__timestamp" id="lastUpdate-1">Last update: —</span>
+            </div>
+            <div class="seat-card__glow" id="glow-1"></div>
+          </article>
+
+          <!-- Seat 2 -->
+          <article class="seat-card glass-panel" id="seat-2" data-status="unknown">
+            <div class="seat-card__header">
+              <div class="seat-card__id">
+                <div class="seat-card__icon-wrap">
+                  <svg class="seat-card__icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                    <path d="M4 18v3h3v-3h10v3h3v-3h1a1 1 0 001-1v-5a3 3 0 00-3-3h-1V5a2 2 0 00-2-2H8a2 2 0 00-2 2v4H5a3 3 0 00-3 3v5a1 1 0 001 1h1zM8 5h8v4H8V5z"/>
+                  </svg>
+                </div>
+                <span>Seat 2</span>
+              </div>
+              <span class="seat-card__badge" id="badge-2">Unknown</span>
+            </div>
+            <div class="seat-card__body">
+              <div class="seat-card__metric">
+                <span class="metric-label">FSR Sensor</span>
+                <span class="metric-value" id="fsr-2">—</span>
+              </div>
+              <div class="seat-card__metric">
+                <span class="metric-label">Human Detected</span>
+                <span class="metric-value" id="human-2">—</span>
+              </div>
+              <div class="seat-card__metric seat-card__metric--gender">
+                <span class="metric-label">Gender (AI)</span>
+                <span class="metric-value gender-value" id="gender-2">—</span>
+              </div>
+              <div class="seat-card__metric">
+                <span class="metric-label">Session Duration</span>
+                <span class="metric-value metric-value--accent" id="duration-2">—</span>
+              </div>
+            </div>
+            <div class="seat-card__footer">
+              <span class="seat-card__timestamp" id="lastUpdate-2">Last update: —</span>
+            </div>
+            <div class="seat-card__glow" id="glow-2"></div>
+          </article>
+
+          <!-- Seat 3 -->
+          <article class="seat-card glass-panel" id="seat-3" data-status="unknown">
+            <div class="seat-card__header">
+              <div class="seat-card__id">
+                <div class="seat-card__icon-wrap">
+                  <svg class="seat-card__icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                    <path d="M4 18v3h3v-3h10v3h3v-3h1a1 1 0 001-1v-5a3 3 0 00-3-3h-1V5a2 2 0 00-2-2H8a2 2 0 00-2 2v4H5a3 3 0 00-3 3v5a1 1 0 001 1h1zM8 5h8v4H8V5z"/>
+                  </svg>
+                </div>
+                <span>Seat 3</span>
+              </div>
+              <span class="seat-card__badge" id="badge-3">Unknown</span>
+            </div>
+            <div class="seat-card__body">
+              <div class="seat-card__metric">
+                <span class="metric-label">FSR Sensor</span>
+                <span class="metric-value" id="fsr-3">—</span>
+              </div>
+              <div class="seat-card__metric">
+                <span class="metric-label">Human Detected</span>
+                <span class="metric-value" id="human-3">—</span>
+              </div>
+              <div class="seat-card__metric seat-card__metric--gender">
+                <span class="metric-label">Gender (AI)</span>
+                <span class="metric-value gender-value" id="gender-3">—</span>
+              </div>
+              <div class="seat-card__metric">
+                <span class="metric-label">Session Duration</span>
+                <span class="metric-value metric-value--accent" id="duration-3">—</span>
+              </div>
+            </div>
+            <div class="seat-card__footer">
+              <span class="seat-card__timestamp" id="lastUpdate-3">Last update: —</span>
+            </div>
+            <div class="seat-card__glow" id="glow-3"></div>
+          </article>
+
+          <!-- Seat 4 -->
+          <article class="seat-card glass-panel" id="seat-4" data-status="unknown">
+            <div class="seat-card__header">
+              <div class="seat-card__id">
+                <div class="seat-card__icon-wrap">
+                  <svg class="seat-card__icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                    <path d="M4 18v3h3v-3h10v3h3v-3h1a1 1 0 001-1v-5a3 3 0 00-3-3h-1V5a2 2 0 00-2-2H8a2 2 0 00-2 2v4H5a3 3 0 00-3 3v5a1 1 0 001 1h1zM8 5h8v4H8V5z"/>
+                  </svg>
+                </div>
+                <span>Seat 4</span>
+              </div>
+              <span class="seat-card__badge" id="badge-4">Unknown</span>
+            </div>
+            <div class="seat-card__body">
+              <div class="seat-card__metric">
+                <span class="metric-label">FSR Sensor</span>
+                <span class="metric-value" id="fsr-4">—</span>
+              </div>
+              <div class="seat-card__metric">
+                <span class="metric-label">Human Detected</span>
+                <span class="metric-value" id="human-4">—</span>
+              </div>
+              <div class="seat-card__metric seat-card__metric--gender">
+                <span class="metric-label">Gender (AI)</span>
+                <span class="metric-value gender-value" id="gender-4">—</span>
+              </div>
+              <div class="seat-card__metric">
+                <span class="metric-label">Session Duration</span>
+                <span class="metric-value metric-value--accent" id="duration-4">—</span>
+              </div>
+            </div>
+            <div class="seat-card__footer">
+              <span class="seat-card__timestamp" id="lastUpdate-4">Last update: —</span>
+            </div>
+            <div class="seat-card__glow" id="glow-4"></div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ══════════════════ SUMMARY ══════════════════ -->
+      <section class="section" id="summarySection">
+      <h2 class="section__title">
+        <span class="section__icon">📊</span> Live Summary
+      </h2>
+      <div class="summary-grid">
+        <!-- Stat Cards -->
+        <div class="summary-stats">
+          <div class="stat-card glass-panel stat-card--available">
+            <div class="stat-card__icon-bg">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="var(--available)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+            </div>
+            <div class="stat-card__content">
+              <span class="stat-card__value" id="availableCount">—</span>
+              <span class="stat-card__label">Available</span>
+            </div>
+          </div>
+          <div class="stat-card glass-panel stat-card--occupied">
+            <div class="stat-card__icon-bg">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="var(--occupied)"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+            <div class="stat-card__content">
+              <span class="stat-card__value" id="occupiedCount">—</span>
+              <span class="stat-card__label">Occupied</span>
+            </div>
+          </div>
+          <div class="stat-card glass-panel stat-card--bag">
+            <div class="stat-card__icon-bg">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="var(--bag)"><path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4z"/></svg>
+            </div>
+            <div class="stat-card__content">
+              <span class="stat-card__value" id="bagCount">—</span>
+              <span class="stat-card__label">Bag Detected</span>
+            </div>
+          </div>
+          <div class="stat-card glass-panel stat-card--total">
+            <div class="stat-card__icon-bg">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="var(--text-secondary)"><path d="M4 18v3h3v-3h10v3h3v-3h1a1 1 0 001-1v-5a3 3 0 00-3-3h-1V5a2 2 0 00-2-2H8a2 2 0 00-2 2v4H5a3 3 0 00-3 3v5a1 1 0 001 1h1zM8 5h8v4H8V5z"/></svg>
+            </div>
+            <div class="stat-card__content">
+              <span class="stat-card__value" id="totalCount">4</span>
+              <span class="stat-card__label">Total Seats</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Donut + Sound -->
+        <div class="summary-visuals">
+          <div class="donut-card glass-panel">
+            <h3 class="donut-card__title">Occupancy Rate</h3>
+            <div class="donut-chart" id="donutChart">
+              <div class="donut-chart__ring" id="donutRing"></div>
+              <div class="donut-chart__center">
+                <span class="donut-chart__percent" id="donutPercent">0%</span>
+                <span class="donut-chart__sub">occupied</span>
+              </div>
+            </div>
+            <div class="donut-legend">
+              <span class="donut-legend__item"><i style="background:var(--occupied)"></i> Occupied</span>
+              <span class="donut-legend__item"><i style="background:var(--bag)"></i> Bag</span>
+              <span class="donut-legend__item"><i style="background:var(--available)"></i> Free</span>
+            </div>
+          </div>
+
+          <div class="sound-card glass-panel">
+            <h3 class="sound-card__title">Sound Level</h3>
+            <div class="sound-indicator" id="soundIndicator">
+              <div class="sound-bars" id="soundBars">
+                <span class="sound-bar"></span>
+                <span class="sound-bar"></span>
+                <span class="sound-bar"></span>
+                <span class="sound-bar"></span>
+                <span class="sound-bar"></span>
+              </div>
+              <div class="sound-info">
+                <span class="sound-status" id="soundStatus">—</span>
+                <span class="sound-level" id="soundLevel">Level: —</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════ ANALYTICS ══════════════════ -->
+    <section class="section" id="analyticsSection">
+      <h2 class="section__title">
+        <span class="section__icon">📈</span> Analytics
+      </h2>
+
+      <div class="analytics-grid">
+        <!-- KPI tiles -->
+        <div class="kpi-row">
+          <div class="kpi-tile glass-panel">
+            <span class="kpi-tile__label">🏆 Most Used</span>
+            <span class="kpi-tile__value" id="mostUsedSeat">—</span>
+          </div>
+          <div class="kpi-tile glass-panel">
+            <span class="kpi-tile__label">💤 Least Used</span>
+            <span class="kpi-tile__value" id="leastUsedSeat">—</span>
+          </div>
+          <div class="kpi-tile glass-panel">
+            <span class="kpi-tile__label">⏱ Avg Usage</span>
+            <span class="kpi-tile__value" id="avgUsageTime">—</span>
+          </div>
+          <div class="kpi-tile glass-panel">
+            <span class="kpi-tile__label">📊 Occupancy</span>
+            <span class="kpi-tile__value" id="occupancyRate">—</span>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-row">
+          <div class="chart-card glass-panel">
+            <h3 class="chart-card__title">Seat Utilization (%)</h3>
+            <div class="utilization-chart" id="utilizationChart">
+              <div class="bar-group" data-seat="1">
+                <div class="bar-track"><div class="bar-fill" id="utilBar-1" style="height:0%"></div></div>
+                <span class="bar-label">Seat 1</span>
+                <span class="bar-value" id="utilVal-1">0%</span>
+              </div>
+              <div class="bar-group" data-seat="2">
+                <div class="bar-track"><div class="bar-fill" id="utilBar-2" style="height:0%"></div></div>
+                <span class="bar-label">Seat 2</span>
+                <span class="bar-value" id="utilVal-2">0%</span>
+              </div>
+              <div class="bar-group" data-seat="3">
+                <div class="bar-track"><div class="bar-fill" id="utilBar-3" style="height:0%"></div></div>
+                <span class="bar-label">Seat 3</span>
+                <span class="bar-value" id="utilVal-3">0%</span>
+              </div>
+              <div class="bar-group" data-seat="4">
+                <div class="bar-track"><div class="bar-fill" id="utilBar-4" style="height:0%"></div></div>
+                <span class="bar-label">Seat 4</span>
+                <span class="bar-value" id="utilVal-4">0%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="chart-card glass-panel">
+            <h3 class="chart-card__title">Daily Usage (minutes)</h3>
+            <div class="daily-chart" id="dailyChart">
+              <div class="bar-group" data-seat="1">
+                <div class="bar-track"><div class="bar-fill bar-fill--daily" id="dailyBar-1" style="height:0%"></div></div>
+                <span class="bar-label">Seat 1</span>
+                <span class="bar-value" id="dailyVal-1">0m</span>
+              </div>
+              <div class="bar-group" data-seat="2">
+                <div class="bar-track"><div class="bar-fill bar-fill--daily" id="dailyBar-2" style="height:0%"></div></div>
+                <span class="bar-label">Seat 2</span>
+                <span class="bar-value" id="dailyVal-2">0m</span>
+              </div>
+              <div class="bar-group" data-seat="3">
+                <div class="bar-track"><div class="bar-fill bar-fill--daily" id="dailyBar-3" style="height:0%"></div></div>
+                <span class="bar-label">Seat 3</span>
+                <span class="bar-value" id="dailyVal-3">0m</span>
+              </div>
+              <div class="bar-group" data-seat="4">
+                <div class="bar-track"><div class="bar-fill bar-fill--daily" id="dailyBar-4" style="height:0%"></div></div>
+                <span class="bar-label">Seat 4</span>
+                <span class="bar-value" id="dailyVal-4">0m</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════ GENDER ANALYTICS ══════════════════ -->
+    <section class="section" id="genderSection">
+      <h2 class="section__title">
+        <span class="section__icon">🧬</span> Gender Detection Analytics
+        <span class="gender-source-badge">Raspberry Pi AI</span>
+      </h2>
+
+      <div class="gender-analytics-grid">
+        <!-- Gender KPI Tiles -->
+        <div class="gender-kpi-row">
+          <div class="kpi-tile glass-panel kpi-tile--male">
+            <span class="kpi-tile__label">♂ Total Male Sessions</span>
+            <span class="kpi-tile__value" id="totalMaleCount">0</span>
+          </div>
+          <div class="kpi-tile glass-panel kpi-tile--female">
+            <span class="kpi-tile__label">♀ Total Female Sessions</span>
+            <span class="kpi-tile__value" id="totalFemaleCount">0</span>
+          </div>
+          <div class="kpi-tile glass-panel">
+            <span class="kpi-tile__label">📊 Male Ratio</span>
+            <span class="kpi-tile__value" id="maleRatio">—</span>
+          </div>
+          <div class="kpi-tile glass-panel">
+            <span class="kpi-tile__label">📊 Female Ratio</span>
+            <span class="kpi-tile__value" id="femaleRatio">—</span>
+          </div>
+        </div>
+
+        <div class="gender-charts-row">
+          <!-- Gender Distribution Donut -->
+          <div class="chart-card glass-panel">
+            <h3 class="chart-card__title">Gender Distribution</h3>
+            <div class="gender-donut-container">
+              <div class="gender-donut" id="genderDonut">
+                <div class="gender-donut__ring" id="genderDonutRing"></div>
+                <div class="gender-donut__center">
+                  <span class="gender-donut__total" id="genderDonutTotal">0</span>
+                  <span class="gender-donut__sub">total sessions</span>
+                </div>
+              </div>
+              <div class="gender-donut-legend">
+                <span class="gender-donut-legend__item"><i class="legend-swatch legend-swatch--male"></i> Male</span>
+                <span class="gender-donut-legend__item"><i class="legend-swatch legend-swatch--female"></i> Female</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Per-Seat Gender Breakdown -->
+          <div class="chart-card glass-panel">
+            <h3 class="chart-card__title">Per-Seat Gender Breakdown</h3>
+            <div class="gender-breakdown" id="genderBreakdown">
+              <div class="gender-bar-group" data-seat="1">
+                <span class="gender-bar-label">Seat 1</span>
+                <div class="gender-bar-track">
+                  <div class="gender-bar-fill gender-bar-fill--male" id="genderBarMale-1" style="width:0%"></div>
+                  <div class="gender-bar-fill gender-bar-fill--female" id="genderBarFemale-1" style="width:0%"></div>
+                </div>
+                <span class="gender-bar-values" id="genderBarVal-1">0M / 0F</span>
+              </div>
+              <div class="gender-bar-group" data-seat="2">
+                <span class="gender-bar-label">Seat 2</span>
+                <div class="gender-bar-track">
+                  <div class="gender-bar-fill gender-bar-fill--male" id="genderBarMale-2" style="width:0%"></div>
+                  <div class="gender-bar-fill gender-bar-fill--female" id="genderBarFemale-2" style="width:0%"></div>
+                </div>
+                <span class="gender-bar-values" id="genderBarVal-2">0M / 0F</span>
+              </div>
+              <div class="gender-bar-group" data-seat="3">
+                <span class="gender-bar-label">Seat 3</span>
+                <div class="gender-bar-track">
+                  <div class="gender-bar-fill gender-bar-fill--male" id="genderBarMale-3" style="width:0%"></div>
+                  <div class="gender-bar-fill gender-bar-fill--female" id="genderBarFemale-3" style="width:0%"></div>
+                </div>
+                <span class="gender-bar-values" id="genderBarVal-3">0M / 0F</span>
+              </div>
+              <div class="gender-bar-group" data-seat="4">
+                <span class="gender-bar-label">Seat 4</span>
+                <div class="gender-bar-track">
+                  <div class="gender-bar-fill gender-bar-fill--male" id="genderBarMale-4" style="width:0%"></div>
+                  <div class="gender-bar-fill gender-bar-fill--female" id="genderBarFemale-4" style="width:0%"></div>
+                </div>
+                <span class="gender-bar-values" id="genderBarVal-4">0M / 0F</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Gender Event Log -->
+        <div class="event-log-card glass-panel">
+          <h3 class="chart-card__title">
+            <span class="event-log-live-dot"></span> Live Gender Event Log
+          </h3>
+          <div class="event-log" id="genderEventLog">
+            <p class="event-log__empty">Waiting for gender detection events…</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div> <!-- Close #adminPanel -->
+  </main>
+
+  <!-- ══════════════════ FOOTER ══════════════════ -->
+  <footer class="footer glass-panel">
+    <span class="footer__brand">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--available)" style="vertical-align:middle;margin-right:6px"><path d="M7 2v11h3v9l7-12h-4l4-8H7z"/></svg>
+      Powered by <strong>ESP32</strong> + <strong>Raspberry Pi</strong> &amp; <strong>Firebase</strong>
+    </span>
+    <span class="footer__connection" id="connectionStatus">
+      <span class="connection-dot connection-dot--offline" id="connectionDot"></span>
+      <span id="connectionText">Connecting…</span>
+    </span>
+  </footer>
+
+  <!-- ══════════════════ SCRIPTS ══════════════════ -->
+  <script type="module" src="js/firebase-config.js"></script>
+  <script type="module" src="js/analytics.js"></script>
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>

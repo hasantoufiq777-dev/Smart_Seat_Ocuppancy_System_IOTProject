@@ -1,0 +1,93 @@
+{
+  "SmartStudySpace": {
+    "Seats": {
+      "Seat1": {
+        "status": "AVAILABLE",
+        "fsrValue": 0,
+        "humanDetected": false,
+        "lastUpdate": "2026-07-09T00:00:00",
+        "startTime": "",
+        "endTime": "",
+        "currentUsage": 0,
+        "totalUsageToday": 0,
+        "occupancyCount": 0,
+        "gender": "",
+        "genderConfidence": 0,
+        "genderLastEvent": "",
+        "genderLastUpdate": "",
+        "genderStats": {
+          "maleCount": 0,
+          "femaleCount": 0
+        }
+      },
+      "Seat2": {
+        "status": "AVAILABLE",
+        "fsrValue": 0,
+        "humanDetected": false,
+        "lastUpdate": "2026-07-09T00:00:00",
+        "startTime": "",
+        "endTime": "",
+        "currentUsage": 0,
+        "totalUsageToday": 0,
+        "occupancyCount": 0,
+        "gender": "",
+        "genderConfidence": 0,
+        "genderLastEvent": "",
+        "genderLastUpdate": "",
+        "genderStats": {
+          "maleCount": 0,
+          "femaleCount": 0
+        }
+      },
+      "Seat3": {
+        "status": "AVAILABLE",
+        "fsrValue": 0,
+        "humanDetected": false,
+        "lastUpdate": "2026-07-09T00:00:00",
+        "startTime": "",
+        "endTime": "",
+        "currentUsage": 0,
+        "totalUsageToday": 0,
+        "occupancyCount": 0,
+        "gender": "",
+        "genderConfidence": 0,
+        "genderLastEvent": "",
+        "genderLastUpdate": "",
+        "genderStats": {
+          "maleCount": 0,
+          "femaleCount": 0
+        }
+      },
+      "Seat4": {
+        "status": "AVAILABLE",
+        "fsrValue": 0,
+        "humanDetected": false,
+        "lastUpdate": "2026-07-09T00:00:00",
+        "startTime": "",
+        "endTime": "",
+        "currentUsage": 0,
+        "totalUsageToday": 0,
+        "occupancyCount": 0,
+        "gender": "",
+        "genderConfidence": 0,
+        "genderLastEvent": "",
+        "genderLastUpdate": "",
+        "genderStats": {
+          "maleCount": 0,
+          "femaleCount": 0
+        }
+      }
+    },
+    "Summary": {
+      "availableSeats": 4,
+      "occupiedSeats": 0,
+      "bagDetectedSeats": 0,
+      "totalSeats": 4
+    },
+    "Sound": {
+      "level": 0,
+      "status": "Quiet"
+    },
+    "GenderEventLog": {}
+  }
+}
